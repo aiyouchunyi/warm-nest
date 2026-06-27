@@ -8,7 +8,6 @@
 | 字段 | 值 |
 |------|-----|
 | 服务名 | `warm-nest` |
-| 仓库 | https://github.com/aiyouchunyi/warm-nest.git |
 | Go 版本 | 1.23.0 |
 | 配置文件 | app_dev.toml app_local.toml app_prod.toml app.toml |
 
