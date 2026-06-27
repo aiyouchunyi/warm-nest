@@ -1,0 +1,17 @@
+[logger]
+level = "debug"
+
+[database]
+mysql = "root:123456@tcp(127.0.0.1:3306)/warm-nest?charset=utf8&parseTime=True&loc=Local"
+
+# 本地联调：微信走 mock，不真调外部
+[wechat]
+mock = true
+miniprogramState = "develop"
+
+# 本地图片存项目 runtime 目录，静态 URL 指向本地服务
+[storage]
+kind = "LOCAL"
+basePath = "./runtime/images"
+baseUrl = "http://127.0.0.1:8080/static"
+maxFileSize = 10485760

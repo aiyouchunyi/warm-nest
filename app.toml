@@ -1,0 +1,45 @@
+[server]
+site = "GB"
+name = "warm-nest"
+# secretKey: AWS Secrets Manager 中的密钥引用名，按本服务实际密钥填写
+secretKey = "warm-nest"
+
+# Web：必须开 auth_enabled，否则 interceptor 不校验 token、ReqUser 恒为 system（登录态失效）
+[web]
+auth_enabled = true
+
+# JWT 登录态签名（生产请改成强随机；不配则用框架默认值）
+[jwt]
+secretKey = "warm-nest-change-me-in-prod"
+expire = 604800  # token 有效期秒，默认 7 天
+
+# 微信小程序配置（真实值在微信后台申请后填入；secret 由部署平台从 AWS 注入到 env）
+[wechat]
+mock = false                  # 本地联调置 true：feign 不真调微信
+appId = ""                    # 小程序 AppID
+secret = ""                   # AppSecret
+miniprogramState = "formal"   # formal|trial|develop
+tokenRefreshSec = 5400
+# officialSecret = ""         # 服务号 AppSecret（template 渠道发模板消息用；未配则 template 发不出、仅落内消息流）
+# 注：各消息模板ID 不在此配置——已下沉到 notify_route 表按场景随渠道维护（PRD §5.2），
+# 经 /warm-nest/admin/v1/notify-route 管理接口填
+
+# 通知渠道（PRD §5.2 按场景配渠道；具体场景→渠道在 notify_route 表）
+[notify]
+defaultChannel = "log"        # 未配场景兜底 + seed 初值：subscribe|template|log；服务号就绪后改 template
+
+# 图片存储（本地开发默认 LOCAL；prod 走 OSS，见 app_prod.toml）
+[storage]
+kind = "LOCAL"
+basePath = "/data/warm-nest/images"        # 主机持久目录
+baseUrl = "https://api.example.com/static" # 对外访问基础 URL
+maxFileSize = 10485760                      # 10MB
+
+# OSS 对象存储（仅 storage.kind=OSS 时生效；敏感值由部署平台 env 注入）
+[oss]
+endpoint = ""       # 内网 Endpoint（上传用）
+publicEndpoint = "" # 外网 Endpoint（拼公网 URL 用）
+bucket = ""
+region = ""
+accessKeyId = ""
+accessKeySecret = ""

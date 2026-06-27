@@ -1,0 +1,11 @@
+# Build context 中无需进 builder 阶段的内容
+.git
+.gitignore
+.idea
+.vscode
+*.md
+docs
+tests
+*.log
+tmp
+.DS_Store

@@ -1,0 +1,15 @@
+[Unit]
+Description=warm-nest container log archiver (docker logs -f -> daily file)
+After=docker.service
+Wants=docker.service
+
+[Service]
+Type=simple
+Environment=CONTAINER_NAME=warm-nest
+Environment=LOG_DIR=/data/warm-nest/logs
+ExecStart=/usr/local/bin/warm-nest-log-archive.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

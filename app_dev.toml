@@ -1,0 +1,30 @@
+[server]
+mode = "dev"
+iamEnable = false   # 本地联调关闭 AWS IAM/Secrets 拉取
+
+# 开启鉴权：interceptor 才会 Verify token 并把 userId 写入 ReqUser（否则恒为 system）
+[web]
+auth_enabled = true
+
+[logger]
+level = "debug"
+
+[database]
+mysql = "root:123456@tcp(127.0.0.1:3306)/warm-nest?charset=utf8&parseTime=True&loc=Local"
+
+# JWT：dev 下 token 真生效，用固定 key 便于联调
+[jwt]
+secretKey = "warm-nest-dev-secret"
+expire = 604800
+
+# 微信走 mock，不真调外部
+[wechat]
+mock = true
+miniprogramState = "develop"
+
+# 图片本地存储
+[storage]
+kind = "LOCAL"
+basePath = "./runtime/images"
+baseUrl = "http://127.0.0.1:8080/static"
+maxFileSize = 10485760
